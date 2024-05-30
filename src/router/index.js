@@ -1,16 +1,16 @@
-/**
- * router/index.ts
- *
- * Automatic routes for `./src/pages/*.vue`
- */
+import { createRouter, createWebHistory } from 'vue-router';
+import MainRoutes from './MainRoutes.js';
+import AuthRoutes from './AuthRoutes.js';
 
-// Composables
-import { createRouter, createWebHistory } from 'vue-router/auto'
-import { setupLayouts } from 'virtual:generated-layouts'
+export default createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
+        {
+            path: '/:pathMatch(.*)*',
+            component: () => import('@/views/pages/Error404.vue')
+        },
+        MainRoutes,
+        ...AuthRoutes
+    ]
+});
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  extendRoutes: setupLayouts,
-})
-
-export default router
